@@ -8,14 +8,23 @@ function App() {
 
   const AddUserHandler = (uName, uAge) => {
     setUsersList((prevUsersList) => {
-      return [...prevUsersList, {name: uName, age: uAge, id:Math.random().toString()}] ;
+      const updateUsersList = [...prevUsersList] ;
+      updateUsersList.unshift({name: uName, age: uAge, id:'user'+usersList.length}) ;
+      return updateUsersList ;
     }) ;
   }
+
+const deleteItemHandler = (userId) => {
+  setUsersList((prevUsersList) => {
+    const updateUsersList = prevUsersList.filter((user) => user.id !== userId) ;
+    return updateUsersList ;
+  }) ;
+}
 
   return (
     <div>
       <AppUser onAddUser={AddUserHandler} />
-      <UsersList users={usersList}/>
+      <UsersList users={usersList} onDeleteItem={deleteItemHandler} />
     </div>
   );
 }
